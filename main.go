@@ -82,11 +82,13 @@ func main() {
           
             if (elem.Data.AlsoMarketingProjectNumberLMD == "6110CH233134") {
 
-            fmt.Printf("Before midnight: %t\n, Status: %t\n project:%t\n", t.After(midnight), elem.Data.StatusLMD == "FUTURE INVOICE", elem.Data.AlsoMarketingProjectNumberLMD == "6110CH233134")
+            fmt.Printf("Before midnight: %t\n, Status: %t\n project:%t\n", t.Before(midnight), elem.Data.StatusLMD == "FUTURE INVOICE", elem.Data.AlsoMarketingProjectNumberLMD == "6110CH233134")
             fmt.Println(elem.Data.SendToLMD)
+
             }
+            
             // If date is today or earlier and statusLMD is "FUTURE INVOICE"
-            if t.After(midnight) && elem.Data.StatusLMD == "FUTURE INVOICE" && elem.Data.AlsoMarketingProjectNumberLMD == "6110CH233134"{
+            if t.Before(midnight) && elem.Data.StatusLMD == "FUTURE INVOICE" && elem.Data.AlsoMarketingProjectNumberLMD == "6110CH233134"{
                 // Update statusLMD to "OK FOR INVOICING"
                 update := bson.D{{"$set", bson.D{{"data.statusLMD", "OK FOR INVOICING"}}}}
                 _, err = collection.UpdateOne(context.TODO(), bson.M{"_id": cursor.Current.Lookup("_id")}, update)
