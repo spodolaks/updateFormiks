@@ -69,10 +69,9 @@ func main() {
         }
 
         // Parse date string
-        if len(elem.Data.InvoicingDateLMD) > 33 {
-            var datestring = elem.Data.InvoicingDateLMD[:33]
-	
-            layout := "Mon Jan 02 2006 15:04:05 MST-0700"
+        if len(elem.Data.InvoicingDateLMD) > 0 {
+            var datestring = elem.Data.InvoicingDateLMD
+            layout := "2006-01-02T15:04:05.000Z"
             
             t, err := time.Parse(layout, datestring)
             if err != nil {
